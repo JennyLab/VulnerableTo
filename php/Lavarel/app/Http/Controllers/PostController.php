@@ -4,6 +4,7 @@
 */
 
 
+
 public function update(Request $request, $id) 
 {
     // (IDOR): 
@@ -17,3 +18,15 @@ public function update(Request $request, $id)
 
     return redirect()->back()->with('success', 'Post updated');
 }
+
+// Deserialization (PostController.php)
+/*
+public function update(Request $request, $id) 
+{
+    $post = Post::find($id);
+    $metadata = unserialize(base64_decode($request->input('metadata')));
+    
+    $post->metadata = $metadata;
+    $post->save();
+}
+*/
