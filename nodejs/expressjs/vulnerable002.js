@@ -1,3 +1,18 @@
+/*
+   ExpressJS Vulnerable to Parameter Polutions 
+
+
+Payload:
+
+{
+  "__proto__": {
+    "isAdmin": true
+  }
+}
+
+
+*/
+
 const express = require('express');
 const app = express();
 app.use(express.json());
