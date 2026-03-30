@@ -29,4 +29,31 @@ public function update(Request $request, $id)
     $post->metadata = $metadata;
     $post->save();
 }
+
 */
+
+
+
+
+// Parameter Pollution
+/*
+public function update(Request $request, $id) 
+{
+    $post = Post::find($id);
+
+    // Vulnerability
+    $firstStatus = explode('=', explode('&', $_SERVER['QUERY_STRING'])[0])[1] ?? '';
+    
+    if ($firstStatus === 'published' && !auth()->user()->is_admin) {
+        abort(403, 'No puedes publicar');
+    }
+
+    // Parameter Pollution
+    // $request->input('status') devolverá 'published'.
+    // El atacante logró saltarse la validación anterior.
+    $post->status = $request->input('status');
+    $post->save();
+}
+
+*/
+
