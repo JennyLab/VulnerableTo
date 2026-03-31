@@ -15,7 +15,7 @@ import * as serialize from 'node-serialize';
 import * as jwt from 'jsonwebtoken';
 import * as crypto from 'crypto';
 
-// --- Configuraciones y Base de Datos Simulada ---
+
 const WEBHOOK_SECRET = "secure_secret_webhook_key_12345";
 const emailRegex = /^([a-zA-Z0-9]+\s?)*$/;
 const SECRET_KEY = "secret_insecure_key";
@@ -68,8 +68,8 @@ export class VulnerableController {
         const { username, password } = body; 
 
         try {
-            // Simulación de un User.findOne() de Mongoose vulnerable
-            // Si password es un objeto {"$ne": null}, en MongoDB esto evalúa a true.
+            // Simulation User.findOne() de Mongoose vulnerable
+            // Is object {"$ne": null}, in MongoDB is true.
             const isPasswordNotEqualNull = typeof password === 'object' && password['$ne'] === null;
             
             if (username === 'admin' && (password === 'admin123' || isPasswordNotEqualNull)) {
@@ -223,12 +223,12 @@ export class VulnerableController {
     transfer(@Query('account') account: any, @Res() res: Response) {
         if (!account) return res.status(HttpStatus.BAD_REQUEST).send("Invalid Account");
 
-        // Payload: "/?account=0000&account=1234" -> account se convierte en ["0000", "1234"]
+        // Payload: "/?account=0000&account=1234" -> account is ["0000", "1234"]
         if (account === "0000") {
             return res.status(HttpStatus.FORBIDDEN).send("Invalid Transfer");
         }
 
-        // La validación estricta falló, el array pasa y la función extrae el primer elemento
+        // Non-Strict validation of array
         this.processTransferToDB(account); 
 
         res.send(`Transfer Start To: ${account}`);
@@ -240,7 +240,6 @@ export class VulnerableController {
     }
 }
 
-// --- Módulo Raíz ---
 @Module({
   imports: [],
   controllers: [VulnerableController],
@@ -248,10 +247,8 @@ export class VulnerableController {
 })
 export class AppModule {}
 
-// --- Inicialización de la Aplicación (NestFactory) ---
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  // Habilitamos JSON body parser igual que express.json()
   app.use(require('express').json());
   
   await app.listen(3000);
