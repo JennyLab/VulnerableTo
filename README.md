@@ -7,6 +7,8 @@ Mosts used bug bounty backend and api gateway vulnerable codes examples
 * NestJS (NodeJS)
 * Fastify (NodeJS)
 * Apigee (NodeJS)
+* HApi.js (NodeJS)
+* Koa.js (NodeJS)
 
 ## PHP
 * Lavarel (PHP)
